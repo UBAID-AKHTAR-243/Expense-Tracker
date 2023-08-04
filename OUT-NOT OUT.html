@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+       
+#demo1 {background-color: silver;height: 140px;font-size: 100px;color: silver;}
+#demo {background-color: rgb(172, 218, 255);height: 140px;font-size: 100px;color: rgb(172, 214, 248);}
+#HI {float: right;font-size: 20px;}
+#BYE {width: 135px;}
+
+button {
+      background-color: DodgerBlue;
+    border-width: 2px;
+      border-radius: 10px;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 20px;
+       }
+    
+    /* Darker background on mouse-over */
+    button:hover {
+      background-color: RoyalBlue;
+    }
+       
+
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>document.getElementById("demo")</title>
+</head>
+<body>
+    <h1 id="demo1"><b><i>OUT</i></b></h1>
+    <h1 id="demo"><b><i> NOT OUT</i> </b></h1>
+    <Div>
+   <Button ID="HI" onclick="myFunction()">NOT OUT</Button>
+   <Button ID="BYE"onclick="myFunction1()">OUT</Button></Div>
+  
+   
+
+    <script>
+        function myFunction() {
+          var x = document.getElementById("demo");
+          x.style.color = "GREEN";
+        }
+        
+                function myFunction1() {
+                  var x = document.getElementById("demo1");
+                  x.style.color = "RED";
+                }
+                </script>
+</body>
+</html>

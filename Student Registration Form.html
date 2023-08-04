@@ -1,0 +1,127 @@
+<html>
+<head>
+<script type="text/javascript" src="validate.js"></script>
+<title>Student Registration Form</title>
+</head>
+<body style= "background:#1f0e74;">
+<form action="#" name="StudentRegistration" onsubmit="return(validate());">
+
+<table cellpadding="16" width="60%" bgcolor="#8b7add" align="center"
+cellspacing="2">
+
+<tr>
+<td colspan=2>
+<center><font size=6><b><u>Student Registration Form</u></b></font></center>
+</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td><input type=text name=textnames id="textname" size="35"></td>
+</tr>
+
+<tr>
+<td>Father Name</td>
+<td><input type="text" name="fathername" id="fathername"
+size="35"></td>
+</tr>
+
+<tr>
+    <td>Mobile No</td>
+    <td><input type="text" name="mobileno" id="mobileno" size="35"></td>
+    </tr>
+
+
+</tr>
+<tr>
+<td>E-mail ID</td>
+<td><input type="text" name="emailid" id="emailid" size="35"></td>
+</tr>
+
+
+
+
+<tr>
+<td>Postal Address</td>
+<td><input type="text" name="paddress" id="paddress" size="35"></td>
+</tr>
+
+<tr>
+<td>Personal Address</td>
+<td><input type="text" name="personaladdress"
+id="personaladdress" size="35"></td>
+</tr>
+<tr>
+    <td>Date Of Birth</td>
+<td><input type="date">SEX
+<input type="radio" name="sex" value="male" size="10"checked>Male
+<input type="radio" name="sex" value="Female" size="10" >Female
+<input type="radio" id="other" name="sex" value="other">
+  <label for="other">Other</label>
+</td>
+</tr>
+<tr>
+<td>Residence</td>
+<td>
+<select name="City">
+<option value="-1" selected>select..</option>
+<option value="Chak No. 243 G.B">Chak No.. 243 G.B.</option>
+<option value="Chak No. 244 G.B">Chak No. 244 G.B</option>
+<option value="Chak No. 245 G.B">Chak No. 245 G.B</option>
+<option value="Chak No. 246 G.B">Chak No. 246 G.B</option>
+<option value="OTHERS">OTHERS</option>
+<input type="text"size="15.5" >
+</select>
+</td>
+</tr>
+
+<tr>
+<td>Course</td>
+<td><select name="Course">
+<option value="-1" selected>select</option>
+<option value="Science">Science---------------</option>
+<option value="Arts">Arts</option>
+<option value="Biology">Biology</option>
+<option value="Computer">Computer</option>
+<option value="OTHERS">OTHERS</option>
+<input type="text" size="15">
+</select></td>
+</tr>
+
+
+<tr>
+<td>District</td>
+<td><select name="District">
+<option value="-1" selected>select..</option>
+<option value="TOBA TEK SINGH">TOBA TEK SINGH.</option>
+<option value="OTHERS">OTHERS</option>
+<input type="text" size="15">
+</select></td>
+</tr>
+
+<tr>
+<td>Province</td>
+<td><select Name="State">
+<option value="-1" selected>select</option>
+<option value="PUNJAB">PUNJAB--------.-----</option>
+<option value="OTHERS">OTHERS</option>
+<input type="text" size="15">
+</select></td>
+</tr>
+
+
+<tr>
+<td>Pin Code</td>
+<td><input type="text" name="pincode" id="pincode" size="35"></td>
+
+
+
+
+<tr>
+<td align="center"><input type="reset"></td>
+<td  align="right" ><input type="submit" value="Submit Form"></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
