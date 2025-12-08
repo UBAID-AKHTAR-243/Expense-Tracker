@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plywood Calculator - Construction Material Estimator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo i {
+            font-size: 2.8rem;
+            color: var(--primary);
+            background: white;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .app-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .calculator-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            transition: var(--transition);
+        }
+        
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: var(--primary);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .input-with-unit {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .input-with-unit:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 18px 20px;
+            font-size: 1.1rem;
+            color: var(--dark);
+            outline: none;
+        }
+        
+        .unit {
+            background: #e2e8f0;
+            padding: 18px 20px;
+            font-weight: 600;
+            color: var(--gray);
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+        
+        .results-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .results-title {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+        
+        .reset-btn {
+            background: #f1f5f9;
+            color: var(--gray);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .reset-btn:hover {
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+        
+        .results-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .result-item {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        .result-item:hover {
+            background: #f1f5f9;
+        }
+        
+        .result-label {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .result-unit {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 500;
+            margin-left: 5px;
+        }
+        
+        .total-plywood {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+            border-left-color: var(--secondary);
+        }
+        
+        .explanation {
+            margin-top: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .explanation h3 {
+            font-size: 1.6rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .explanation p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .formula {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--dark);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .example-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .example-values {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            color: var(--gray);
+            width: 100%;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .disclaimer {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #9a3412;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .calculator-card, .results-card {
+                padding: 25px;
+            }
+            
+            .result-value {
+                font-size: 1.8rem;
+            }
+            
+            .app-container {
+                gap: 25px;
+            }
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-calculator"></i>
+                <div>
+                    <h1>Plywood Calculator</h1>
+                    <p class="subtitle">Calculate the exact number of plywood sheets needed for your construction project based on area dimensions</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="app-container">
+            <div class="calculator-card">
+                <h2 class="card-title"><i class="fas fa-ruler-combined"></i> Enter Dimensions</h2>
+                
+                <div class="input-group">
+                    <label for="length"><i class="fas fa-arrows-alt-h"></i> Length of Area</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="length" placeholder="Enter length in cm" min="1" step="0.1">
+                        <div class="unit">cm</div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="width"><i class="fas fa-arrows-alt-v"></i> Width of Area</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="width" placeholder="Enter width in cm" min="1" step="0.1">
+                        <div class="unit">cm</div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="plywood-size"><i class="fas fa-th-large"></i> Standard Plywood Sheet Size</label>
+                    <div class="info-text">
+                        <p style="color: var(--gray); font-size: 0.95rem; margin-top: 5px;">
+                            Standard plywood: 122cm × 244cm (4ft × 8ft)
+                        </p>
+                    </div>
+                </div>
+                
+                <button class="calculate-btn" id="calculateBtn">
+                    <i class="fas fa-calculator"></i> Calculate Plywood Needed
+                </button>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Calculating...</p>
+                </div>
+            </div>
+            
+            <div class="results-card">
+                <div class="results-header">
+                    <h2 class="results-title"><i class="fas fa-chart-bar"></i> Results</h2>
+                    <button class="reset-btn" id="resetBtn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="results-container">
+                    <div class="result-item">
+                        <div class="result-label">
+                            <i class="fas fa-ruler-vertical"></i> Plywood Sheets (Length)
+                        </div>
+                        <div class="result-value" id="plResult">--</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">
+                            <i class="fas fa-ruler-horizontal"></i> Plywood Sheets (Width)
+                        </div>
+                        <div class="result-value" id="pwResult">--</div>
+                    </div>
+                    
+                    <div class="result-item total-plywood">
+                        <div class="result-label">
+                            <i class="fas fa-th-large"></i> Total Plywood Sheets Needed
+                        </div>
+                        <div class="result-value" id="tpResult">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h3><i class="fas fa-info-circle"></i> How It Works</h3>
+            <p>This calculator determines how many standard plywood sheets (122cm × 244cm) you need to cover a given area. The calculation accounts for the fact that plywood sheets are typically cut slightly smaller than their nominal size to account for wastage and gaps.</p>
+            
+            <div class="formula">
+                <p><strong>Calculation Formula:</strong></p>
+                <p>Plywood sheets along length = (Length / 14.75) - 1</p>
+                <p>Plywood sheets along width = (Width / 15.70) - 1</p>
+                <p>Total plywood sheets = (Plywood along length) × (Plywood along width)</p>
+            </div>
+            
+            <p>The formulas account for standard plywood sheet dimensions and typical construction practices where sheets are cut slightly smaller than the nominal size.</p>
+        </div>
+        
+        <div class="explanation">
+            <h3><i class="fas fa-lightbulb"></i> Quick Examples</h3>
+            <p>Try these common dimensions or click to calculate:</p>
+            
+            <div class="examples">
+                <div class="example-card" data-length="220" data-width="110">
+                    <div class="example-title"><i class="fas fa-home"></i> Small Room</div>
+                    <div class="example-values">220cm × 110cm (7.2ft × 3.6ft)</div>
+                </div>
+                
+                <div class="example-card" data-length="400" data-width="300">
+                    <div class="example-title"><i class="fas fa-building"></i> Living Room</div>
+                    <div class="example-values">400cm × 300cm (13.1ft × 9.8ft)</div>
+                </div>
+                
+                <div class="example-card" data-length="600" data-width="400">
+                    <div class="example-title"><i class="fas fa-warehouse"></i> Garage Floor</div>
+                    <div class="example-values">600cm × 400cm (19.7ft × 13.1ft)</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Plywood Calculator v1.0 • Designed for construction professionals and DIY enthusiasts</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <a href="#"><i class="fas fa-share-alt"></i> Share</a>
+                <a href="#"><i class="fas fa-download"></i> Export Results</a>
+            </div>
+            
+            <div class="disclaimer">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Note:</strong> This calculator provides an estimate. Actual plywood requirements may vary based on cutting patterns, waste factors, and specific project requirements. Always purchase 10-15% extra material for wastage.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const lengthInput = document.getElementById('length');
+            const widthInput = document.getElementById('width');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const loadingElement = document.getElementById('loading');
+            
+            // Result elements
+            const plResult = document.getElementById('plResult');
+            const pwResult = document.getElementById('pwResult');
+            const tpResult = document.getElementById('tpResult');
+            
+            // Example cards
+            const exampleCards = document.querySelectorAll('.example-card');
+            
+            // Calculate function based on the provided Python logic
+            function calculatePlywood() {
+                // Show loading animation
+                loadingElement.style.display = 'block';
+                
+                // Simulate calculation delay for better UX
+                setTimeout(() => {
+                    const l = parseFloat(lengthInput.value);
+                    const b = parseFloat(widthInput.value);
+                    
+                    // Validate inputs
+                    if (isNaN(l) || isNaN(b) || l <= 0 || b <= 0) {
+                        alert('Please enter valid positive numbers for both length and width.');
+                        loadingElement.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Perform calculations (same as Python code)
+                    const pl = (l / 14.75) - 1;
+                    const pw = (b / 15.70) - 1;
+                    const tp = pl * pw;
+                    
+                    // Format and display results
+                    plResult.textContent = pl.toFixed(2);
+                    pwResult.textContent = pw.toFixed(2);
+                    tpResult.textContent = tp.toFixed(2);
+                    
+                    // Hide loading animation
+                    loadingElement.style.display = 'none';
+                    
+                    // Add some visual feedback
+                    const results = document.querySelectorAll('.result-value');
+                    results.forEach(result => {
+                        result.style.color = '#10b981';
+                        setTimeout(() => {
+                            result.style.color = '';
+                        }, 500);
+                    });
+                }, 600);
+            }
+            
+            // Reset function
+            function resetCalculator() {
+                lengthInput.value = '';
+                widthInput.value = '';
+                plResult.textContent = '--';
+                pwResult.textContent = '--';
+                tpResult.textContent = '--';
+                
+                // Focus on the first input
+                lengthInput.focus();
+            }
+            
+            // Event listeners
+            calculateBtn.addEventListener('click', calculatePlywood);
+            
+            resetBtn.addEventListener('click', resetCalculator);
+            
+            // Allow Enter key to trigger calculation
+            lengthInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    calculatePlywood();
+                }
+            });
+            
+            widthInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    calculatePlywood();
+                }
+            });
+            
+            // Example card click handlers
+            exampleCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const length = this.getAttribute('data-length');
+                    const width = this.getAttribute('data-width');
+                    
+                    lengthInput.value = length;
+                    widthInput.value = width;
+                    
+                    // Calculate automatically
+                    calculatePlywood();
+                    
+                    // Highlight the selected example
+                    exampleCards.forEach(c => c.style.border = 'none');
+                    this.style.border = '2px solid var(--primary)';
+                });
+            });
+            
+            // Auto-focus on length input when page loads
+            lengthInput.focus();
+            
+            // Add some sample data for demo
+            // Uncomment to pre-fill with the example from the Python code
+            // lengthInput.value = 220;
+            // widthInput.value = 110;
+        });
+    </script>
+</body>
+</html>
